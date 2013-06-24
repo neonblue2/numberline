@@ -16,15 +16,15 @@ public class BucketController implements InputProcessor {
 	private OrthographicCamera camera;
 	
 	private ArrayList<Bucket> buckets;
-	private int currentBucket;
+	private int currentBucketIndex;
 	
 	private Line line;
 	
-	public BucketController(GameScreen gameScreen, OrthographicCamera camera/*, ArrayList<Bucket> buckets*/) {
+	public BucketController(GameScreen gameScreen, OrthographicCamera camera) {
 		this.camera = camera;
 		
 		buckets = new ArrayList<Bucket>();
-		currentBucket = UNTOUCHED_BUCKET_ADDRESS;
+		currentBucketIndex = UNTOUCHED_BUCKET_ADDRESS;
 		
 		line = new Line();
 		
@@ -32,20 +32,20 @@ public class BucketController implements InputProcessor {
 	}
 	
 	private void moveCurrentBucket(final Vector3 touchPos) {
-		if (line.isOnLine(buckets.get(currentBucket))) {
+		if (line.isOnLine(getCurrentBucket())) {
     		if (touchPos.x < Line.x1) {
     			touchPos.x = Line.x1;
     		} else if (touchPos.x > Line.x2) {
     			touchPos.x = Line.x2;
     		}
     	} else {
-    		buckets.get(currentBucket).setPosY(touchPos.y - buckets.get(currentBucket).getDimY() / 2);
+    		getCurrentBucket().setPosY(touchPos.y - getCurrentBucket().getDimY() / 2);
     		// Where the buckets stick
-    		if (isOnLine(buckets.get(currentBucket)) && line.addBucket(buckets.get(currentBucket))) {
-    			buckets.get(currentBucket).setPosY(Line.y - buckets.get(currentBucket).getDimY() / 2);
+    		if (isOnLine(getCurrentBucket()) && line.addBucket(getCurrentBucket())) {
+    			getCurrentBucket().setPosY(Line.y - getCurrentBucket().getDimY() / 2);
     		}
     	}
-		buckets.get(currentBucket).setPosX(touchPos.x - buckets.get(currentBucket).getDimX() / 2);
+		getCurrentBucket().setPosX(touchPos.x - getCurrentBucket().getDimX() / 2);
 	}
 	
 	private boolean touchedBucket(final int i, final Vector3 touchPos) {
@@ -67,8 +67,7 @@ public class BucketController implements InputProcessor {
 		camera.unproject(touchPos);
 		for (int i = buckets.size() - 1; i >= 0; i--) {
 			if (touchedBucket(i, touchPos)) {
-				System.out.println("Touching " + i);
-				currentBucket = i;
+				currentBucketIndex = i;
 				return true;
 			}
 		}
@@ -77,13 +76,13 @@ public class BucketController implements InputProcessor {
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		currentBucket = UNTOUCHED_BUCKET_ADDRESS;
+		currentBucketIndex = UNTOUCHED_BUCKET_ADDRESS;
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if (currentBucket > UNTOUCHED_BUCKET_ADDRESS) {
+		if (currentBucketIndex > UNTOUCHED_BUCKET_ADDRESS) {
     		Vector3 touchPos = new Vector3(screenX, screenY, 0);
         	camera.unproject(touchPos);
     		moveCurrentBucket(touchPos);
@@ -95,12 +94,16 @@ public class BucketController implements InputProcessor {
 		return buckets;
 	}
 	
-	public int getCurrentBucket() {
-		return currentBucket;
+	public int getCurrentBucketIndex() {
+		return currentBucketIndex;
 	}
 	
-	public void setCurrentBucket(final int currentBucket) {
-		this.currentBucket = currentBucket;
+	public void setCurrentBucketIndex(final int currentBucketIndex) {
+		this.currentBucketIndex = currentBucketIndex;
+	}
+	
+	public Bucket getCurrentBucket() {
+		return buckets.get(currentBucketIndex);
 	}
 
 	@Override

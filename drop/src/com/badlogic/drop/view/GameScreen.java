@@ -39,12 +39,12 @@ public class GameScreen implements Screen {
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();
 	    
-	    if (bucketController.getCurrentBucket() > BucketController.UNTOUCHED_BUCKET_ADDRESS) {
-	    	final Bucket b = bucketController.getBuckets().get(bucketController.getCurrentBucket());
+	    if (bucketController.getCurrentBucketIndex() > BucketController.UNTOUCHED_BUCKET_ADDRESS) {
+	    	final Bucket b = bucketController.getCurrentBucket();
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
-	    	bucketController.getBuckets().remove(bucketController.getCurrentBucket());
+	    	bucketController.getBuckets().remove(bucketController.getCurrentBucketIndex());
 	    	bucketController.getBuckets().add(b);
-	    	bucketController.setCurrentBucket(bucketController.getBuckets().size() - 1);
+	    	bucketController.setCurrentBucketIndex(bucketController.getBuckets().size() - 1);
 	    }
 	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
 	    	batch.draw(bucketController.getBuckets().get(i).getImage(), bucketController.getBuckets().get(i).getPosX(), bucketController.getBuckets().get(i).getPosY(), bucketController.getBuckets().get(i).getDimX(), bucketController.getBuckets().get(i).getDimY());

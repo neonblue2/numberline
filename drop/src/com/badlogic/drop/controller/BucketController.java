@@ -28,6 +28,7 @@ public class BucketController implements InputProcessor {
 		this.camera = camera;
 		
 		this.buckets = buckets;
+		currentBucket = UNTOUCHED_BUCKET_ADDRESS;
 		
 		line = new Line();
 		
@@ -46,7 +47,6 @@ public class BucketController implements InputProcessor {
     		// Where the buckets stick
     		if (isOnLine(buckets.get(currentBucket)) && line.addBucket(buckets.get(currentBucket))) {
     			buckets.get(currentBucket).setPosY(Line.y - buckets.get(currentBucket).getDimY() / 2);
-    			System.out.println(line.getNumBucketsOnLine());
     		}
     	}
 		buckets.get(currentBucket).setPosX(touchPos.x - buckets.get(currentBucket).getDimX() / 2);

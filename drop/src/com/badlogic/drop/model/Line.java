@@ -13,4 +13,12 @@ public class Line {
 	public Line() {
 		bucketsOnLine = 0;
 	}
+	
+	public int getBucketsOnLine() {
+		return bucketsOnLine;
+	}
+	
+	public void addBucket() {
+		bucketsOnLine++;
+	}
 }

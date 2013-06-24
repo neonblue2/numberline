@@ -20,12 +20,16 @@ public class BucketController implements InputProcessor {
 	private ArrayList<Bucket> buckets;
 	private int currentBucket;
 	
+	private Line line;
+	
 	public BucketController(GameScreen gameScreen, OrthographicCamera camera, ArrayList<Bucket> buckets) {
 		this.gameScreen = gameScreen;
 		
 		this.camera = camera;
 		
 		this.buckets = buckets;
+		
+		line = new Line();
 		
 		Gdx.input.setInputProcessor(this);
 	}
@@ -41,6 +45,8 @@ public class BucketController implements InputProcessor {
     		buckets.get(currentBucket).setPosY(touchPos.y - buckets.get(currentBucket).getDimY() / 2);
     		if (isOnLine(buckets.get(currentBucket))) {
     			buckets.get(currentBucket).setPosY(Line.y - buckets.get(currentBucket).getDimY() / 2);
+    			line.addBucket();
+    			System.out.println(line.getBucketsOnLine());
     		}
     	}
 		buckets.get(currentBucket).setPosX(touchPos.x - buckets.get(currentBucket).getDimX() / 2);

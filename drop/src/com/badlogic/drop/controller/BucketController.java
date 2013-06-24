@@ -22,12 +22,12 @@ public class BucketController implements InputProcessor {
 	
 	private Line line;
 	
-	public BucketController(GameScreen gameScreen, OrthographicCamera camera, ArrayList<Bucket> buckets) {
+	public BucketController(GameScreen gameScreen, OrthographicCamera camera/*, ArrayList<Bucket> buckets*/) {
 		this.gameScreen = gameScreen;
 		
 		this.camera = camera;
 		
-		this.buckets = buckets;
+		buckets = new ArrayList<Bucket>();
 		currentBucket = UNTOUCHED_BUCKET_ADDRESS;
 		
 		line = new Line();
@@ -71,6 +71,7 @@ public class BucketController implements InputProcessor {
 		camera.unproject(touchPos);
 		for (int i = buckets.size() - 1; i >= 0; i--) {
 			if (touchedBucket(i, touchPos)) {
+				System.out.println("Touching " + i);
 				currentBucket = i;
 				gameScreen.setCurrentBucket(currentBucket);
 				return true;
@@ -93,6 +94,10 @@ public class BucketController implements InputProcessor {
     		moveCurrentBucket(touchPos);
     	}
 		return true;
+	}
+	
+	public ArrayList<Bucket> getBuckets() {
+		return buckets;
 	}
 	
 	public void setCurrentBucket(final int currentBucket) {

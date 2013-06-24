@@ -25,6 +25,10 @@ public class Bucket {
 	public Texture getImage() {
 		return image;
 	}
+	
+	public int getValue() {
+		return value;
+	}
 
 	public float getPosX() {
 		return pos.x;

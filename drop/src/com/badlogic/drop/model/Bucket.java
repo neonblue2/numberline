@@ -11,8 +11,9 @@ public class Bucket {
 	
 	private int value;
 	
-	public Bucket(int x, int y, int w, int h) {
+	public Bucket(int value, int x, int y, int w, int h) {
 		image = new Texture(Gdx.files.internal("bucket.png"));
+		this.value = value;
 		pos = new Vector2(x, y);
 		dim = new Vector2(w, h);
 	}

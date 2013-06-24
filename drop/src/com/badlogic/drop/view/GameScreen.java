@@ -76,7 +76,7 @@ public class GameScreen implements Screen {
 	    
 	    for (int i = 0; i < NUM_OF_BUCKETS; i++) {
 	    	int x2 = x * (i + 1);
-	    	Bucket bucket = new Bucket(x2, y, w, h);
+	    	Bucket bucket = new Bucket(i, x2, y, w, h);
 	    	buckets.add(bucket);
 	    }
 	    

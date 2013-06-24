@@ -1,5 +1,7 @@
 package com.badlogic.drop.model;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Color;
 
 public class Line {
@@ -8,17 +10,23 @@ public class Line {
 	public static final int x2 = 750;
 	public static final int y = 50;
 	
-	private int bucketsOnLine;
+	private int numbucketsOnLine;
+	
+	private ArrayList<Bucket> bucketsOnLine;
 	
 	public Line() {
-		bucketsOnLine = 0;
+		numbucketsOnLine = 0;
+		
+		bucketsOnLine = new ArrayList<Bucket>();
 	}
 	
-	public int getBucketsOnLine() {
-		return bucketsOnLine;
+	public int getNumBucketsOnLine() {
+		return numbucketsOnLine;
 	}
 	
-	public void addBucket() {
-		bucketsOnLine++;
+	public void addBucket(Bucket bucket) {
+		numbucketsOnLine++;
+		
+		bucketsOnLine.add(bucket);
 	}
 }

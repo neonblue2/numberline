@@ -45,8 +45,8 @@ public class BucketController implements InputProcessor {
     		buckets.get(currentBucket).setPosY(touchPos.y - buckets.get(currentBucket).getDimY() / 2);
     		if (isOnLine(buckets.get(currentBucket))) {
     			buckets.get(currentBucket).setPosY(Line.y - buckets.get(currentBucket).getDimY() / 2);
-    			line.addBucket();
-    			System.out.println(line.getBucketsOnLine());
+    			line.addBucket(buckets.get(currentBucket));
+    			System.out.println(line.getNumBucketsOnLine());
     		}
     	}
 		buckets.get(currentBucket).setPosX(touchPos.x - buckets.get(currentBucket).getDimX() / 2);

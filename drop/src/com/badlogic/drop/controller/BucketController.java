@@ -35,7 +35,7 @@ public class BucketController implements InputProcessor {
 	}
 	
 	private void moveCurrentBucket(final Vector3 touchPos) {
-		if (isOnLine(buckets.get(currentBucket))) {
+		if (line.isOnLine(buckets.get(currentBucket))) {
     		if (touchPos.x < Line.x1) {
     			touchPos.x = Line.x1;
     		} else if (touchPos.x > Line.x2) {
@@ -43,9 +43,9 @@ public class BucketController implements InputProcessor {
     		}
     	} else {
     		buckets.get(currentBucket).setPosY(touchPos.y - buckets.get(currentBucket).getDimY() / 2);
-    		if (isOnLine(buckets.get(currentBucket))) {
+    		// Where the buckets stick
+    		if (isOnLine(buckets.get(currentBucket)) && line.addBucket(buckets.get(currentBucket))) {
     			buckets.get(currentBucket).setPosY(Line.y - buckets.get(currentBucket).getDimY() / 2);
-    			line.addBucket(buckets.get(currentBucket));
     			System.out.println(line.getNumBucketsOnLine());
     		}
     	}

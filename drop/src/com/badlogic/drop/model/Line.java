@@ -24,9 +24,28 @@ public class Line {
 		return numbucketsOnLine;
 	}
 	
-	public void addBucket(Bucket bucket) {
-		numbucketsOnLine++;
+	public boolean addBucket(Bucket bucket) {
+		boolean returnValue = false;;
+		for (int i = 0; i < bucketsOnLine.size(); i++) {
+			if (bucket.getPosX() < bucketsOnLine.get(i).getPosX()) {
+				// To the left
+				returnValue = bucket.getValue() < bucketsOnLine.get(i).getValue();
+			} else if (bucket.getPosX() > bucketsOnLine.get(i).getPosX()) {
+				// To the right
+				returnValue = bucket.getValue() > bucketsOnLine.get(i).getValue();
+			}
+		}
 		
-		bucketsOnLine.add(bucket);
+		if (returnValue || numbucketsOnLine == 0) {
+			numbucketsOnLine++;
+			bucketsOnLine.add(bucket);
+			returnValue = true;
+		}
+		
+		return returnValue;
+	}
+	
+	public boolean isOnLine(Bucket bucket) {
+		return bucketsOnLine.contains(bucket);
 	}
 }

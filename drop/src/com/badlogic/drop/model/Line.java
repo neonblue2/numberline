@@ -7,4 +7,10 @@ public class Line {
 	public static final int x1 = 50;
 	public static final int x2 = 750;
 	public static final int y = 50;
+	
+	private int bucketsOnLine;
+	
+	public Line() {
+		bucketsOnLine = 0;
+	}
 }

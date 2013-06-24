@@ -18,7 +18,6 @@ public class GameScreen implements Screen {
 	private final int NUM_OF_BUCKETS = 3;
 	
 	private BucketController bucketController;
-	private int currentBucket;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer lineRenderer;
@@ -39,18 +38,16 @@ public class GameScreen implements Screen {
 	    
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();
-	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
-	    	if (i != currentBucket) {
-	    		batch.draw(bucketController.getBuckets().get(i).getImage(), bucketController.getBuckets().get(i).getPosX(), bucketController.getBuckets().get(i).getPosY(), bucketController.getBuckets().get(i).getDimX(), bucketController.getBuckets().get(i).getDimY());
-	    	}
-	    }
-	    if (currentBucket > BucketController.UNTOUCHED_BUCKET_ADDRESS) {
-	    	final Bucket b = bucketController.getBuckets().get(currentBucket);
+	    
+	    if (bucketController.getCurrentBucket() > BucketController.UNTOUCHED_BUCKET_ADDRESS) {
+	    	final Bucket b = bucketController.getBuckets().get(bucketController.getCurrentBucket());
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
-	    	bucketController.getBuckets().remove(currentBucket);
+	    	bucketController.getBuckets().remove(bucketController.getCurrentBucket());
 	    	bucketController.getBuckets().add(b);
-	    	currentBucket = bucketController.getBuckets().size() - 1;
-	    	bucketController.setCurrentBucket(currentBucket);
+	    	bucketController.setCurrentBucket(bucketController.getBuckets().size() - 1);
+	    }
+	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
+	    	batch.draw(bucketController.getBuckets().get(i).getImage(), bucketController.getBuckets().get(i).getPosX(), bucketController.getBuckets().get(i).getPosY(), bucketController.getBuckets().get(i).getDimX(), bucketController.getBuckets().get(i).getDimY());
 	    }
 	    batch.end();
 	}
@@ -63,7 +60,6 @@ public class GameScreen implements Screen {
 	    batch = new SpriteBatch();
 	    
 	    bucketController = new BucketController(this, camera);
-	    currentBucket = BucketController.UNTOUCHED_BUCKET_ADDRESS;
 	    
 	    final int x = (CAMERA_WIDTH / 2) - (CAMERA_HEIGHT / 2);
 	    final int y = 100;
@@ -85,10 +81,6 @@ public class GameScreen implements Screen {
 			bucketController.getBuckets().get(i).disposeTexture();
 		}
 	    batch.dispose();
-	}
-	
-	public void setCurrentBucket(final int currentBucket) {
-		this.currentBucket = currentBucket;
 	}
 
 	@Override

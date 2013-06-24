@@ -13,8 +13,6 @@ import com.badlogic.gdx.math.Vector3;
 public class BucketController implements InputProcessor {
 	public static final int UNTOUCHED_BUCKET_ADDRESS = -1;
 	
-	private GameScreen gameScreen;
-	
 	private OrthographicCamera camera;
 	
 	private ArrayList<Bucket> buckets;
@@ -23,8 +21,6 @@ public class BucketController implements InputProcessor {
 	private Line line;
 	
 	public BucketController(GameScreen gameScreen, OrthographicCamera camera/*, ArrayList<Bucket> buckets*/) {
-		this.gameScreen = gameScreen;
-		
 		this.camera = camera;
 		
 		buckets = new ArrayList<Bucket>();
@@ -73,7 +69,6 @@ public class BucketController implements InputProcessor {
 			if (touchedBucket(i, touchPos)) {
 				System.out.println("Touching " + i);
 				currentBucket = i;
-				gameScreen.setCurrentBucket(currentBucket);
 				return true;
 			}
 		}
@@ -98,6 +93,10 @@ public class BucketController implements InputProcessor {
 	
 	public ArrayList<Bucket> getBuckets() {
 		return buckets;
+	}
+	
+	public int getCurrentBucket() {
+		return currentBucket;
 	}
 	
 	public void setCurrentBucket(final int currentBucket) {

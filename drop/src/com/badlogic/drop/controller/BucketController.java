@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class BucketController implements InputProcessor {
 	public static final int UNTOUCHED_BUCKET_ADDRESS = -1;
+	private final float[] INVALID_OLD_TOUCH_POS = {-1, -1, -1};
 	
 	private OrthographicCamera camera;
 	
@@ -19,6 +20,8 @@ public class BucketController implements InputProcessor {
 	private int currentBucketIndex;
 	
 	private Line line;
+	
+	private Vector3 oldTouchPos;
 	
 	public BucketController(GameScreen gameScreen, OrthographicCamera camera) {
 		this.camera = camera;
@@ -28,10 +31,12 @@ public class BucketController implements InputProcessor {
 		
 		line = new Line();
 		
+		oldTouchPos = new Vector3(INVALID_OLD_TOUCH_POS);
+		
 		Gdx.input.setInputProcessor(this);
 	}
 	
-	private void moveCurrentBucket(final Vector3 touchPos) {
+	private void moveCurrentBucket(final Vector3 touchPos, final Vector3 oldTouchPos) {
 		if (line.isOnLine(getCurrentBucket())) {
     		if (touchPos.x < Line.x1) {
     			touchPos.x = Line.x1;
@@ -39,13 +44,14 @@ public class BucketController implements InputProcessor {
     			touchPos.x = Line.x2;
     		}
     	} else {
-    		getCurrentBucket().setPosY(touchPos.y - getCurrentBucket().getDimY() / 2);
+    		getCurrentBucket().setPosY(getCurrentBucket().getPosY() + (touchPos.y - oldTouchPos.y));
     		// Where the buckets stick
     		if (isOnLine(getCurrentBucket()) && line.addBucket(getCurrentBucket())) {
     			getCurrentBucket().setPosY(Line.y - getCurrentBucket().getDimY() / 2);
     		}
     	}
-		getCurrentBucket().setPosX(touchPos.x - getCurrentBucket().getDimX() / 2);
+		getCurrentBucket().setPosX(getCurrentBucket().getPosX() + (touchPos.x - oldTouchPos.x));
+		this.oldTouchPos.set(touchPos);
 	}
 	
 	private boolean touchedBucket(final int i, final Vector3 touchPos) {
@@ -68,6 +74,7 @@ public class BucketController implements InputProcessor {
 		for (int i = buckets.size() - 1; i >= 0; i--) {
 			if (touchedBucket(i, touchPos)) {
 				currentBucketIndex = i;
+				oldTouchPos.set(touchPos);
 				return true;
 			}
 		}
@@ -77,6 +84,7 @@ public class BucketController implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		currentBucketIndex = UNTOUCHED_BUCKET_ADDRESS;
+		oldTouchPos.set(INVALID_OLD_TOUCH_POS);
 		return false;
 	}
 
@@ -85,7 +93,7 @@ public class BucketController implements InputProcessor {
 		if (currentBucketIndex > UNTOUCHED_BUCKET_ADDRESS) {
     		Vector3 touchPos = new Vector3(screenX, screenY, 0);
         	camera.unproject(touchPos);
-    		moveCurrentBucket(touchPos);
+    		moveCurrentBucket(touchPos, oldTouchPos);
     	}
 		return true;
 	}

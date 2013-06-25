@@ -36,7 +36,7 @@ public class BucketController implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 	}
 	
-	private void moveCurrentBucket(final Vector3 touchPos, final Vector3 oldTouchPos) {
+	private void moveCurrentBucket(final Vector3 touchPos) {
 		if (line.isOnLine(getCurrentBucket())) {
     		if (touchPos.x < Line.x1) {
     			touchPos.x = Line.x1;
@@ -51,7 +51,7 @@ public class BucketController implements InputProcessor {
     		}
     	}
 		getCurrentBucket().setPosX(getCurrentBucket().getPosX() + (touchPos.x - oldTouchPos.x));
-		this.oldTouchPos.set(touchPos);
+		oldTouchPos.set(touchPos);
 	}
 	
 	private boolean touchedBucket(final int i, final Vector3 touchPos) {
@@ -93,7 +93,7 @@ public class BucketController implements InputProcessor {
 		if (currentBucketIndex > UNTOUCHED_BUCKET_ADDRESS) {
     		Vector3 touchPos = new Vector3(screenX, screenY, 0);
         	camera.unproject(touchPos);
-    		moveCurrentBucket(touchPos, oldTouchPos);
+    		moveCurrentBucket(touchPos);
     	}
 		return true;
 	}

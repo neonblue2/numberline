@@ -9,7 +9,7 @@ public class Bucket {
 	private final Vector2 pos;
 	private final Vector2 dim;
 	
-	private Value value;
+	public final Value value;
 	
 	public Bucket(Value value, int x, int y, int w, int h) {
 		image = new Texture(Gdx.files.internal("bucket.png"));
@@ -24,10 +24,6 @@ public class Bucket {
 	
 	public Texture getImage() {
 		return image;
-	}
-	
-	public Value getValue() {
-		return value;
 	}
 
 	public float getPosX() {

@@ -29,10 +29,24 @@ public class Line {
 		for (int i = 0; i < bucketsOnLine.size(); i++) {
 			if (bucket.getPosX() < bucketsOnLine.get(i).getPosX()) {
 				// To the left
-				returnValue = bucket.getValue() < bucketsOnLine.get(i).getValue();
+				switch (bucket.value.compare(bucketsOnLine.get(i).value)) {
+				case LESS:
+				case EQUAL:
+					returnValue = true;
+					break;
+				default:
+					break;
+				}
 			} else if (bucket.getPosX() > bucketsOnLine.get(i).getPosX()) {
 				// To the right
-				returnValue = bucket.getValue() > bucketsOnLine.get(i).getValue();
+				switch (bucket.value.compare(bucketsOnLine.get(i).value)) {
+				case EQUAL:
+				case GREATER:
+					returnValue = true;
+					break;
+				default:
+					break;
+				}
 			}
 		}
 		

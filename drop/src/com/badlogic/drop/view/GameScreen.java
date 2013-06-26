@@ -3,6 +3,7 @@ package com.badlogic.drop.view;
 import com.badlogic.drop.controller.BucketController;
 import com.badlogic.drop.model.Bucket;
 import com.badlogic.drop.model.Line;
+import com.badlogic.drop.model.Value;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
@@ -68,7 +69,7 @@ public class GameScreen implements Screen {
 	    
 	    for (int i = 0; i < NUM_OF_BUCKETS; i++) {
 	    	int x2 = x * (i + 1);
-	    	Bucket bucket = new Bucket(i, x2, y, w, h);
+	    	Bucket bucket = new Bucket(new Value(i, 1), x2, y, w, h);
 	    	bucketController.getBuckets().add(bucket);
 	    }
 	    

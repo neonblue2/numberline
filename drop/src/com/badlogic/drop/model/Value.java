@@ -17,11 +17,11 @@ public class Value {
 		final int thisModifiedNum = numerator * value.denominator;
 		final int valueModifiedNum = value.numerator * denominator;
 		
-		if (valueModifiedNum < thisModifiedNum) {
+		if (thisModifiedNum < valueModifiedNum) {
 			return Equality.LESS;
-		} else if (valueModifiedNum == thisModifiedNum) {
+		} else if (thisModifiedNum == valueModifiedNum) {
 			return Equality.EQUAL;
-		} else if (valueModifiedNum > thisModifiedNum) {
+		} else if (thisModifiedNum > valueModifiedNum) {
 			return Equality.GREATER;
 		}
 		

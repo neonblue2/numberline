@@ -42,7 +42,6 @@ public class GameScreen implements Screen {
 	    
 	    if (bucketController.getCurrentBucketIndex() > BucketController.UNTOUCHED_BUCKET_ADDRESS) {
 	    	final Bucket b = bucketController.getCurrentBucket();
-	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
 	    	bucketController.getBuckets().remove(bucketController.getCurrentBucketIndex());
 	    	bucketController.getBuckets().add(b);
 	    	bucketController.setCurrentBucketIndex(bucketController.getBuckets().size() - 1);

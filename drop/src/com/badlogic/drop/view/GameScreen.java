@@ -52,8 +52,7 @@ public class GameScreen implements Screen {
 	    
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();
-	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
-	    	final Bucket b = bucketController.getBuckets().get(i);
+	    for (final Bucket b : bucketController.getBuckets()) {
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
 	    	final float xPos = b.getPosX() + (b.getDimX() / 2);
     		final float yPos = b.getPosY() + (b.getDimY() / 2);

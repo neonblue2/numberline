@@ -35,12 +35,16 @@ public class Line {
 				case EQUAL:
 					returnValue = true;
 					break;
+				case GREATER:
+					return false;
 				default:
 					break;
 				}
 			} else if (bucket.getPosX() > bucketOnLine.getPosX()) {
 				// To the right
 				switch (bucket.value.compare(bucketOnLine.value)) {
+				case LESS:
+					return false;
 				case EQUAL:
 				case GREATER:
 					returnValue = true;

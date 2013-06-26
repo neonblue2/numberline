@@ -27,9 +27,10 @@ public class Line {
 	public boolean addBucket(Bucket bucket) {
 		boolean returnValue = false;;
 		for (int i = 0; i < bucketsOnLine.size(); i++) {
-			if (bucket.getPosX() < bucketsOnLine.get(i).getPosX()) {
+			final Bucket bucketOnLine = bucketsOnLine.get(i);
+			if (bucket.getPosX() < bucketOnLine.getPosX()) {
 				// To the left
-				switch (bucket.value.compare(bucketsOnLine.get(i).value)) {
+				switch (bucket.value.compare(bucketOnLine.value)) {
 				case LESS:
 				case EQUAL:
 					returnValue = true;
@@ -37,9 +38,9 @@ public class Line {
 				default:
 					break;
 				}
-			} else if (bucket.getPosX() > bucketsOnLine.get(i).getPosX()) {
+			} else if (bucket.getPosX() > bucketOnLine.getPosX()) {
 				// To the right
-				switch (bucket.value.compare(bucketsOnLine.get(i).value)) {
+				switch (bucket.value.compare(bucketOnLine.value)) {
 				case EQUAL:
 				case GREATER:
 					returnValue = true;

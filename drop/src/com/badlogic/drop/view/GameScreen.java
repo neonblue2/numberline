@@ -55,12 +55,12 @@ public class GameScreen implements Screen {
 	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
 	    	final Bucket b = bucketController.getBuckets().get(i);
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
+	    	final float xPos = b.getPosX() + (b.getDimX() / 2);
+    		final float yPos = b.getPosY() + (b.getDimY() / 2);
 	    	if (b.value.type != Type.FRACTION) {
-	    		valueText.draw(batch, b.value.toString(), b.getPosX() + (b.getDimX() / 2), b.getPosY() + (b.getDimY() / 2));
+	    		valueText.draw(batch, b.value.toString(), xPos, yPos);
 	    	} else {
 	    		final String[] valueArray = b.value.toString().split("/");
-	    		final float xPos = b.getPosX() + (b.getDimX() / 2);
-	    		final float yPos = b.getPosY() + (b.getDimY() / 2);
 	    		valueText.draw(batch, valueArray[0], xPos, yPos + (valueText.getLineHeight() / 10));
 	    		valueText.draw(batch, "_", xPos, yPos);
 	    		valueText.draw(batch, valueArray[1], xPos, yPos - (9 * valueText.getLineHeight() / 10));

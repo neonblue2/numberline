@@ -1,7 +1,7 @@
 package com.badlogic.drop.model;
 
 public class Value {
-	private enum Type {
+	public enum Type {
 		WHOLE, DECIMAL, FRACTION
 	}
 	
@@ -12,7 +12,7 @@ public class Value {
 	public final int numerator;
 	public final int denominator;
 	
-	private final Type type;
+	public final Type type;
 	
 	public Value(final int numerator, final int denominator) {
 		this.numerator = numerator;

@@ -4,6 +4,7 @@ import com.badlogic.drop.controller.BucketController;
 import com.badlogic.drop.model.Bucket;
 import com.badlogic.drop.model.Line;
 import com.badlogic.drop.model.Value;
+import com.badlogic.drop.model.Value.Type;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -53,7 +54,16 @@ public class GameScreen implements Screen {
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
 	    	final BitmapFont valueText = new BitmapFont();
 	    	valueText.setColor(Color.RED);
-	    	valueText.draw(batch, b.value.toString(), b.getPosX() + (b.getDimX() / 2), b.getPosY() + (b.getDimY() / 2));
+	    	if (b.value.type != Type.FRACTION) {
+	    		valueText.draw(batch, b.value.toString(), b.getPosX() + (b.getDimX() / 2), b.getPosY() + (b.getDimY() / 2));
+	    	} else {
+	    		final String[] valueArray = b.value.toString().split("/");
+	    		final float xPos = b.getPosX() + (b.getDimX() / 2);
+	    		final float yPos = b.getPosY() + (b.getDimY() / 2);
+	    		valueText.draw(batch, valueArray[0], xPos, yPos + (valueText.getLineHeight() / 10));
+	    		valueText.draw(batch, "_", xPos, yPos);
+	    		valueText.draw(batch, valueArray[1], xPos, yPos - (9 * valueText.getLineHeight() / 10));
+	    	}
 	    }
 	    batch.end();
 	}

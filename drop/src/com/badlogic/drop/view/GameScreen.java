@@ -6,8 +6,10 @@ import com.badlogic.drop.model.Line;
 import com.badlogic.drop.model.Value;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -47,7 +49,11 @@ public class GameScreen implements Screen {
 	    	bucketController.setCurrentBucketIndex(bucketController.getBuckets().size() - 1);
 	    }
 	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
-	    	batch.draw(bucketController.getBuckets().get(i).getImage(), bucketController.getBuckets().get(i).getPosX(), bucketController.getBuckets().get(i).getPosY(), bucketController.getBuckets().get(i).getDimX(), bucketController.getBuckets().get(i).getDimY());
+	    	final Bucket b = bucketController.getBuckets().get(i);
+	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
+	    	final BitmapFont valueText = new BitmapFont();
+	    	valueText.setColor(Color.RED);
+	    	valueText.draw(batch, ""+b.value.numerator, b.getPosX() + (b.getDimX() / 2), b.getPosY() + (b.getDimY() / 2));
 	    }
 	    batch.end();
 	}

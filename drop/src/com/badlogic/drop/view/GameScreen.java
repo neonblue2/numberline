@@ -39,21 +39,22 @@ public class GameScreen implements Screen {
 		lineRenderer.setColor(Line.colour);
 		lineRenderer.line(Line.x1, Line.y, Line.x2, Line.y);
 		lineRenderer.end();
-	    
-	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
-	    batch.begin();
-	    
-	    if (bucketController.getCurrentBucketIndex() > BucketController.UNTOUCHED_BUCKET_ADDRESS) {
+		
+		if (bucketController.getCurrentBucketIndex() > BucketController.UNTOUCHED_BUCKET_ADDRESS) {
 	    	final Bucket b = bucketController.getCurrentBucket();
 	    	bucketController.getBuckets().remove(bucketController.getCurrentBucketIndex());
 	    	bucketController.getBuckets().add(b);
 	    	bucketController.setCurrentBucketIndex(bucketController.getBuckets().size() - 1);
 	    }
+		
+		final BitmapFont valueText = new BitmapFont();
+	    valueText.setColor(Color.RED);
+	    
+	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
+	    batch.begin();
 	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
 	    	final Bucket b = bucketController.getBuckets().get(i);
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
-	    	final BitmapFont valueText = new BitmapFont();
-	    	valueText.setColor(Color.RED);
 	    	if (b.value.type != Type.FRACTION) {
 	    		valueText.draw(batch, b.value.toString(), b.getPosX() + (b.getDimX() / 2), b.getPosY() + (b.getDimY() / 2));
 	    	} else {

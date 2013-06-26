@@ -27,4 +27,11 @@ public class Value {
 		
 		return Equality.ERROR;
 	}
+	
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append(numerator);
+		return s.toString();
+	}
 }

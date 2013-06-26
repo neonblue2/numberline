@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
 	    	final BitmapFont valueText = new BitmapFont();
 	    	valueText.setColor(Color.RED);
-	    	valueText.draw(batch, ""+b.value.numerator, b.getPosX() + (b.getDimX() / 2), b.getPosY() + (b.getDimY() / 2));
+	    	valueText.draw(batch, b.value.toString(), b.getPosX() + (b.getDimX() / 2), b.getPosY() + (b.getDimY() / 2));
 	    }
 	    batch.end();
 	}

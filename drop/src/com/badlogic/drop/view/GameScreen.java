@@ -21,7 +21,7 @@ public class GameScreen implements Screen {
 	private final int CAMERA_WIDTH = 800;
 	private final int CAMERA_HEIGHT = 480;
 	
-	private final int NUM_OF_BUCKETS = 3;
+	private final int NUM_OF_BUCKETS = 4;
 	
 	private BucketController bucketController;
 	

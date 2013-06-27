@@ -31,10 +31,6 @@ public class GameScreen implements Screen {
 	
 	private final BitmapFont valueText = new BitmapFont();
 	
-	public GameScreen() {
-		valueText.setColor(Color.RED);
-	}
-	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
@@ -104,6 +100,8 @@ public class GameScreen implements Screen {
 	    }
 	    
 	    lineRenderer = new ShapeRenderer();
+	    
+	    valueText.setColor(Color.RED);
 	}
 	
 	@Override

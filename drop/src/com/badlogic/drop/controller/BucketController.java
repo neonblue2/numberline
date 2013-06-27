@@ -37,6 +37,16 @@ public class BucketController implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 	}
 	
+	private void moveBucketOnLine(final Bucket b, float xPos) {
+		if ((xPos + b.getDimX() / 2) < Line.x1) {
+			xPos = Line.x1 - b.getDimX() / 2;
+		} else if ((xPos + b.getDimX() / 2) > Line.x2) {
+			xPos = Line.x2 - b.getDimX() / 2;
+		}
+    	b.setPosX(xPos);
+		handleCollisions(b);
+	}
+	
 	private void moveCurrentBucket(final Vector3 touchPos) {
 		if (line.isOnLine(getCurrentBucket())) {
     		if (touchPos.x < Line.x1) {
@@ -57,7 +67,7 @@ public class BucketController implements InputProcessor {
     		}
     	}
 		getCurrentBucket().setPosX(getCurrentBucket().getPosX() + (touchPos.x - oldTouchPos.x));
-		handleCollisions();
+		handleCollisions(getCurrentBucket());
 		oldTouchPos.set(touchPos);
 	}
 	
@@ -74,17 +84,17 @@ public class BucketController implements InputProcessor {
 		return (bucket.getPosY() + bucket.getDimY() / 2) <= Line.y;
 	}
 	
-	private void handleCollisions() {
-		final float currentLeftEdge = getCurrentBucket().getPosX();
-		final float currentRightEdge = getCurrentBucket().getPosX() + getCurrentBucket().getDimX();
+	private void handleCollisions(final Bucket bucket) {
+		final float bucketLeftEdge = bucket.getPosX();
+		final float bucketRightEdge = bucket.getPosX() + bucket.getDimX();
 		for (final Bucket b : buckets) {
-			if (!b.equals(getCurrentBucket()) && isOnLine(getCurrentBucket()) && isOnLine(b)) {
+			if (!b.equals(getCurrentBucket()) && !b.equals(bucket) && isOnLine(bucket) && isOnLine(b)) {
 				final float bLeftEdge = b.getPosX();
 				final float bRightEdge = b.getPosX() + b.getDimX();
-				if (currentLeftEdge < bRightEdge && currentRightEdge > bRightEdge) {
-					b.setPosX(currentLeftEdge - b.getDimX());
-				} else if (currentRightEdge > bLeftEdge && currentLeftEdge < bLeftEdge) {
-					b.setPosX(currentRightEdge);
+				if (bucketLeftEdge < bRightEdge && bucketRightEdge > bRightEdge) {
+					moveBucketOnLine(b, bucketLeftEdge - b.getDimX());
+				} else if (bucketRightEdge > bLeftEdge && bucketLeftEdge < bLeftEdge) {
+					moveBucketOnLine(b, bucketRightEdge);
 				}
 			}
 		}

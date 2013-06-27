@@ -39,7 +39,7 @@ public class Value {
 	
 	@Override
 	public String toString() {
-		StringBuilder s = new StringBuilder();
+		final StringBuilder s = new StringBuilder();
 		switch (type) {
 		case DECIMAL:
 			final double dec = (double)numerator/denominator;

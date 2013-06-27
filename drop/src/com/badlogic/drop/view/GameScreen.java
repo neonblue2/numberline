@@ -1,5 +1,7 @@
 package com.badlogic.drop.view;
 
+import java.util.Random;
+
 import com.badlogic.drop.controller.BucketController;
 import com.badlogic.drop.model.Bucket;
 import com.badlogic.drop.model.Line;
@@ -84,7 +86,17 @@ public class GameScreen implements Screen {
 	    
 	    for (int i = 0; i < NUM_OF_BUCKETS; i++) {
 	    	int x2 = x * (i + 1);
-	    	Bucket bucket = new Bucket(new Value(i, 1), x2, y, w, h);
+	    	// TEST CODE
+	    	final Type[] valueTypes = {Type.WHOLE, Type.DECIMAL, Type.FRACTION};
+	    	final int typeIndex = new Random().nextInt(3);
+	    	final Type valueType = valueTypes[typeIndex];
+	    	final int numerator = new Random().nextInt(10);
+	    	int denominator = 1;
+	    	if (valueType != Type.WHOLE) {
+	    		denominator = new Random().nextInt(50);
+	    	}
+	    	// TODO: REMOVE TEST CODE
+	    	Bucket bucket = new Bucket(new Value(valueType, numerator, denominator), x2, y, w, h);
 	    	bucketController.getBuckets().add(bucket);
 	    }
 	    

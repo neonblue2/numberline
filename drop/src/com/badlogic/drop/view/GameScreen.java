@@ -29,6 +29,12 @@ public class GameScreen implements Screen {
 	private ShapeRenderer lineRenderer;
 	private SpriteBatch batch;
 	
+	private final BitmapFont valueText = new BitmapFont();
+	
+	public GameScreen() {
+		valueText.setColor(Color.RED);
+	}
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
@@ -48,9 +54,6 @@ public class GameScreen implements Screen {
 	    	bucketController.getBuckets().add(b);
 	    	bucketController.setCurrentBucketIndex(bucketController.getBuckets().size() - 1);
 	    }
-		
-		final BitmapFont valueText = new BitmapFont();
-	    valueText.setColor(Color.RED);
 	    
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();

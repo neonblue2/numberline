@@ -57,6 +57,7 @@ public class BucketController implements InputProcessor {
     		}
     	}
 		getCurrentBucket().setPosX(getCurrentBucket().getPosX() + (touchPos.x - oldTouchPos.x));
+		handleCollisions();
 		oldTouchPos.set(touchPos);
 	}
 	
@@ -71,6 +72,22 @@ public class BucketController implements InputProcessor {
 	
 	private boolean isOnLine(final Bucket bucket) {
 		return (bucket.getPosY() + bucket.getDimY() / 2) <= Line.y;
+	}
+	
+	private void handleCollisions() {
+		final float currentLeftEdge = getCurrentBucket().getPosX();
+		final float currentRightEdge = getCurrentBucket().getPosX() + getCurrentBucket().getDimX();
+		for (final Bucket b : buckets) {
+			if (!b.equals(getCurrentBucket()) && isOnLine(getCurrentBucket()) && isOnLine(b)) {
+				final float bLeftEdge = b.getPosX();
+				final float bRightEdge = b.getPosX() + b.getDimX();
+				if (currentLeftEdge < bRightEdge && currentRightEdge > bRightEdge) {
+					b.setPosX(currentLeftEdge - b.getDimX());
+				} else if (currentRightEdge > bLeftEdge && currentLeftEdge < bLeftEdge) {
+					b.setPosX(currentRightEdge);
+				}
+			}
+		}
 	}
 
 	@Override

@@ -93,8 +93,10 @@ public class BucketController implements InputProcessor {
 				final float bRightEdge = b.getPosX() + b.getDimX();
 				if (bucketLeftEdge < bRightEdge && bucketRightEdge > bRightEdge) {
 					moveBucketOnLine(b, bucketLeftEdge - b.getDimX());
+					moveBucketOnLine(bucket, b.getPosX() + b.getDimX());
 				} else if (bucketRightEdge > bLeftEdge && bucketLeftEdge < bLeftEdge) {
 					moveBucketOnLine(b, bucketRightEdge);
+					moveBucketOnLine(bucket, b.getPosX() - bucket.getDimX());
 				}
 			}
 		}

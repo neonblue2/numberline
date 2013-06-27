@@ -12,7 +12,7 @@ public class Bucket {
 	public final Value value;
 	
 	public Bucket(Value value, int x, int y, int w, int h) {
-		image = new Texture(Gdx.files.internal("bucket.png"));
+		image = new Texture(Gdx.files.internal("droplet.png"));
 		this.value = value;
 		pos = new Vector2(x, y);
 		dim = new Vector2(w, h);

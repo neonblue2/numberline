@@ -93,7 +93,7 @@ public class GameScreen implements Screen {
 	    	final int numerator = new Random().nextInt(10);
 	    	int denominator = 1;
 	    	if (valueType != Type.WHOLE) {
-	    		denominator = new Random().nextInt(50);
+	    		denominator = new Random().nextInt(49) + 1;
 	    	}
 	    	// TODO: REMOVE TEST CODE
 	    	Bucket bucket = new Bucket(new Value(valueType, numerator, denominator), x2, y, w, h);

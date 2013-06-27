@@ -1,5 +1,7 @@
 package com.badlogic.drop.model;
 
+import java.text.DecimalFormat;
+
 public class Value {
 	public enum Type {
 		WHOLE, DECIMAL, FRACTION
@@ -14,10 +16,10 @@ public class Value {
 	
 	public final Type type;
 	
-	public Value(final int numerator, final int denominator) {
+	public Value(final Type type, final int numerator, final int denominator) {
 		this.numerator = numerator;
 		this.denominator = denominator;
-		type = Type.WHOLE;
+		this.type = type;
 	}
 	
 	public Equality compare(final Value value) {
@@ -40,7 +42,9 @@ public class Value {
 		StringBuilder s = new StringBuilder();
 		switch (type) {
 		case DECIMAL:
-			s.append((double)numerator/denominator);
+			final double dec = (double)numerator/denominator;
+			final DecimalFormat format = new DecimalFormat("#.##");
+	        s.append(Double.valueOf(format.format(dec)));
 			break;
 		case FRACTION:
 			s.append(numerator + "/" + denominator);

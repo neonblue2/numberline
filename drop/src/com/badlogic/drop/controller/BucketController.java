@@ -60,10 +60,10 @@ public class BucketController implements InputProcessor {
     		if (isOnLine(getCurrentBucket())) {
     			getCurrentBucket().setPosY(Line.y - getCurrentBucket().getDimY() / 2);
     			if (!line.addBucket(getCurrentBucket())) {
-    				getCurrentBucket().setImage(new Texture(Gdx.files.internal("bucket.png")));
+    				getCurrentBucket().setImage(new Texture(Gdx.files.internal("droplet.png")));
     			}
     		} else {
-    			getCurrentBucket().setImage(new Texture(Gdx.files.internal("droplet.png")));
+    			getCurrentBucket().setImage(new Texture(Gdx.files.internal("bucket.png")));
     		}
     	}
 		getCurrentBucket().setPosX(getCurrentBucket().getPosX() + (touchPos.x - oldTouchPos.x));

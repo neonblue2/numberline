@@ -80,8 +80,8 @@ public class GameScreen implements Screen {
 	    
 	    final int x = (CAMERA_WIDTH / 2) - (CAMERA_HEIGHT / 2);
 	    final int y = 100;
-	    final int w = 96;
-	    final int h = 96;
+	    final int w = 72;
+	    final int h = 75;
 	    
 	    for (int i = 0; i < NUM_OF_BUCKETS; i++) {
 	    	int x2 = x * (i + 1);

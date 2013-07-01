@@ -38,22 +38,15 @@ public class BucketController implements InputProcessor {
 	}
 	
 	private void moveBucketOnLine(final Bucket b, float xPos) {
-		if ((xPos + b.getDimX() / 2) < Line.x1) {
-			xPos = Line.x1 - b.getDimX() / 2;
-		} else if ((xPos + b.getDimX() / 2) > Line.x2) {
-			xPos = Line.x2 - b.getDimX() / 2;
-		}
+		xPos = alterXPos(b, xPos);
     	b.setPosX(xPos);
 		handleCollisions(b);
 	}
 	
 	private void moveCurrentBucket(final Vector3 touchPos) {
+		float xPos = getCurrentBucket().getPosX() + (touchPos.x - oldTouchPos.x);
 		if (line.isOnLine(getCurrentBucket())) {
-    		if (touchPos.x < Line.x1) {
-    			touchPos.x = Line.x1;
-    		} else if (touchPos.x > Line.x2) {
-    			touchPos.x = Line.x2;
-    		}
+			xPos = alterXPos(getCurrentBucket(), xPos);
     	} else {
     		getCurrentBucket().setPosY(getCurrentBucket().getPosY() + (touchPos.y - oldTouchPos.y));
     		// Where the buckets stick
@@ -66,9 +59,18 @@ public class BucketController implements InputProcessor {
     			getCurrentBucket().setImage(new Texture(Gdx.files.internal("bucket.png")));
     		}
     	}
-		getCurrentBucket().setPosX(getCurrentBucket().getPosX() + (touchPos.x - oldTouchPos.x));
+		getCurrentBucket().setPosX(xPos);
 		handleCollisions(getCurrentBucket());
 		oldTouchPos.set(touchPos);
+	}
+	
+	private float alterXPos(final Bucket b, float xPos) {
+		if ((xPos + b.getDimX() / 2) < Line.x1) {
+			xPos = Line.x1 - b.getDimX() / 2;
+		} else if ((xPos + b.getDimX() / 2) > Line.x2) {
+			xPos = Line.x2 - b.getDimX() / 2;
+		}
+		return xPos;
 	}
 	
 	private boolean touchedBucket(final int i, final Vector3 touchPos) {

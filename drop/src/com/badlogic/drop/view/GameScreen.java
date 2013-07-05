@@ -18,9 +18,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GameScreen implements Screen {
-	private final int CAMERA_WIDTH = 800;
-	private final int CAMERA_HEIGHT = 480;
-	
 	private final int NUM_OF_BUCKETS = 4;
 	
 	private BucketController bucketController;
@@ -76,6 +73,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+		final int CAMERA_WIDTH = 800;
+		final int CAMERA_HEIGHT = 480;
+		
 		camera = new OrthographicCamera();
 	    camera.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
 	    

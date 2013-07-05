@@ -8,7 +8,6 @@ import com.badlogic.drop.view.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
 public class BucketController implements InputProcessor {
@@ -53,10 +52,10 @@ public class BucketController implements InputProcessor {
     		if (isOnLine(getCurrentBucket())) {
     			getCurrentBucket().setPosY(Line.y - getCurrentBucket().getDimY() / 2);
     			if (!line.addBucket(getCurrentBucket())) {
-    				getCurrentBucket().setImage(new Texture(Gdx.files.internal("droplet.png")));
+    				getCurrentBucket().setInvalidArea(true);
     			}
     		} else {
-    			getCurrentBucket().setImage(new Texture(Gdx.files.internal("bucket.png")));
+    			getCurrentBucket().setInvalidArea(false);
     		}
     	}
 		getCurrentBucket().setPosX(xPos);

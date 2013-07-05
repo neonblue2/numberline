@@ -9,6 +9,8 @@ public class Bucket {
 	private final Vector2 pos;
 	private final Vector2 dim;
 	
+	private boolean inInvalidArea;
+	
 	public final Value value;
 	
 	public Bucket(Value value, int x, int y, int w, int h) {
@@ -16,6 +18,7 @@ public class Bucket {
 		this.value = value;
 		pos = new Vector2(x, y);
 		dim = new Vector2(w, h);
+		inInvalidArea = false;
 	}
 	
 	public void disposeTexture() {
@@ -42,6 +45,10 @@ public class Bucket {
 		return dim.y;
 	}
 	
+	public boolean isInInvalidArea() {
+		return inInvalidArea;
+	}
+	
 	public void setImage(final Texture image) {
 		disposeTexture();
 		this.image = image;
@@ -61,5 +68,9 @@ public class Bucket {
 	
 	public void setDimH(final float h) {
 		dim.y = h;
+	}
+	
+	public void setInvalidArea(boolean b) {
+		inInvalidArea = b;
 	}
 }

@@ -35,10 +35,17 @@ public class GameScreen implements Screen {
 	    
 	    camera.update();
 	    
+	    final Line line = bucketController.getLine();
+	    
+	    if (bucketController.hasGameEnded()) {
+	    	line.x1 -= 10;
+	    	line.x2 -= 10;
+	    }
+	    
 	    lineRenderer.setProjectionMatrix(camera.combined);
 		lineRenderer.begin(ShapeType.Line);
-		lineRenderer.setColor(Line.colour);
-		lineRenderer.line(Line.x1, Line.y, Line.x2, Line.y);
+		lineRenderer.setColor(line.colour);
+		lineRenderer.line(line.x1, line.y, line.x2, line.y);
 		lineRenderer.end();
 		
 		if (bucketController.getCurrentBucketIndex() > BucketController.UNTOUCHED_BUCKET_ADDRESS) {
@@ -51,21 +58,29 @@ public class GameScreen implements Screen {
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();
 	    for (final Bucket b : bucketController.getBuckets()) {
+	    	// Set the filter colour of the bucket
 	    	if (b.isInInvalidArea()) {
 	    		batch.setColor(Color.RED);
 	    	} else {
 	    		batch.setColor(Color.WHITE);
 	    	}
+	    	// Set the position of the text on the bucket
+	    	float textXPos = b.getPosX() + (b.getDimX() / 2);
+    		final float textYPos = b.getPosY() + (b.getDimY() / 2);
+    		// Alter the bucket and text x positions if the game has ended
+	    	if (bucketController.hasGameEnded()) {
+		    	b.setPosX(b.getPosX()-10);
+		    	textXPos -= 10;
+		    }
+	    	// Draw the bucket and its text
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
-	    	final float xPos = b.getPosX() + (b.getDimX() / 2);
-    		final float yPos = b.getPosY() + (b.getDimY() / 2);
 	    	if (b.value.type != Type.FRACTION) {
-	    		valueText.draw(batch, b.value.toString(), xPos, yPos);
+	    		valueText.draw(batch, b.value.toString(), textXPos, textYPos);
 	    	} else {
 	    		final String[] valueArray = b.value.toString().split("/");
-	    		valueText.draw(batch, valueArray[0], xPos, yPos + (valueText.getLineHeight() / 10));
-	    		valueText.draw(batch, "_", xPos, yPos);
-	    		valueText.draw(batch, valueArray[1], xPos, yPos - (9 * valueText.getLineHeight() / 10));
+	    		valueText.draw(batch, valueArray[0], textXPos, textYPos + (valueText.getLineHeight() / 10));
+	    		valueText.draw(batch, "_", textXPos, textYPos);
+	    		valueText.draw(batch, valueArray[1], textXPos, textYPos - (9 * valueText.getLineHeight() / 10));
 	    	}
 	    }
 	    batch.end();

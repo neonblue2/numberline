@@ -25,6 +25,8 @@ public class BucketController implements InputProcessor {
 	
 	private Vector3 oldTouchPos;
 	
+	private boolean gameOver;
+	
 	public BucketController(GameScreen gameScreen, OrthographicCamera camera) {
 		this.gameScreen = gameScreen;
 		this.camera = camera;
@@ -35,6 +37,8 @@ public class BucketController implements InputProcessor {
 		line = new Line();
 		
 		oldTouchPos = new Vector3(INVALID_OLD_TOUCH_POS);
+		
+		gameOver = false;
 		
 		Gdx.input.setInputProcessor(this);
 	}
@@ -53,11 +57,11 @@ public class BucketController implements InputProcessor {
     		getCurrentBucket().setPosY(getCurrentBucket().getPosY() + (touchPos.y - oldTouchPos.y));
     		// Where the buckets stick
     		if (isOnLine(getCurrentBucket())) {
-    			getCurrentBucket().setPosY(Line.y - getCurrentBucket().getDimY() / 2);
+    			getCurrentBucket().setPosY(line.y - getCurrentBucket().getDimY() / 2);
     			if (!line.addBucket(getCurrentBucket())) {
     				getCurrentBucket().setInvalidArea(true);
     			} else if (line.getNumBucketsOnLine() == gameScreen.NUM_OF_BUCKETS) {
-    				// TODO: End game.
+    				endGame();
     			}
     		} else {
     			getCurrentBucket().setInvalidArea(false);
@@ -69,10 +73,10 @@ public class BucketController implements InputProcessor {
 	}
 	
 	private float alterXPos(final Bucket b, float xPos) {
-		if ((xPos + b.getDimX() / 2) < Line.x1) {
-			xPos = Line.x1 - b.getDimX() / 2;
-		} else if ((xPos + b.getDimX() / 2) > Line.x2) {
-			xPos = Line.x2 - b.getDimX() / 2;
+		if ((xPos + b.getDimX() / 2) < line.x1) {
+			xPos = line.x1 - b.getDimX() / 2;
+		} else if ((xPos + b.getDimX() / 2) > line.x2) {
+			xPos = line.x2 - b.getDimX() / 2;
 		}
 		return xPos;
 	}
@@ -87,7 +91,7 @@ public class BucketController implements InputProcessor {
 	}
 	
 	private boolean isOnLine(final Bucket bucket) {
-		return (bucket.getPosY() + bucket.getDimY() / 2) <= Line.y;
+		return (bucket.getPosY() + bucket.getDimY() / 2) <= line.y;
 	}
 	
 	private void handleCollisions(final Bucket bucket) {
@@ -107,16 +111,22 @@ public class BucketController implements InputProcessor {
 			}
 		}
 	}
+	
+	private void endGame() {
+		gameOver = true;
+	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Vector3 touchPos = new Vector3(screenX, screenY, 0);
-		camera.unproject(touchPos);
-		for (int i = buckets.size() - 1; i >= 0; i--) {
-			if (touchedBucket(i, touchPos)) {
-				currentBucketIndex = i;
-				oldTouchPos.set(touchPos);
-				return true;
+		if (!gameOver) {
+			Vector3 touchPos = new Vector3(screenX, screenY, 0);
+			camera.unproject(touchPos);
+			for (int i = buckets.size() - 1; i >= 0; i--) {
+				if (touchedBucket(i, touchPos)) {
+					currentBucketIndex = i;
+					oldTouchPos.set(touchPos);
+					return true;
+				}
 			}
 		}
 		return false;
@@ -153,6 +163,14 @@ public class BucketController implements InputProcessor {
 	
 	public Bucket getCurrentBucket() {
 		return buckets.get(currentBucketIndex);
+	}
+	
+	public Line getLine() {
+		return line;
+	}
+	
+	public boolean hasGameEnded() {
+		return gameOver;
 	}
 
 	@Override

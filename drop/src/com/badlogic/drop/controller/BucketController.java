@@ -14,6 +14,8 @@ public class BucketController implements InputProcessor {
 	public static final int UNTOUCHED_BUCKET_ADDRESS = -1;
 	private final float[] INVALID_OLD_TOUCH_POS = {-1, -1, -1};
 	
+	private GameScreen gameScreen;
+	
 	private OrthographicCamera camera;
 	
 	private ArrayList<Bucket> buckets;
@@ -24,6 +26,7 @@ public class BucketController implements InputProcessor {
 	private Vector3 oldTouchPos;
 	
 	public BucketController(GameScreen gameScreen, OrthographicCamera camera) {
+		this.gameScreen = gameScreen;
 		this.camera = camera;
 		
 		buckets = new ArrayList<Bucket>();
@@ -53,6 +56,8 @@ public class BucketController implements InputProcessor {
     			getCurrentBucket().setPosY(Line.y - getCurrentBucket().getDimY() / 2);
     			if (!line.addBucket(getCurrentBucket())) {
     				getCurrentBucket().setInvalidArea(true);
+    			} else if (line.getNumBucketsOnLine() == gameScreen.NUM_OF_BUCKETS) {
+    				// TODO: End game.
     			}
     		} else {
     			getCurrentBucket().setInvalidArea(false);

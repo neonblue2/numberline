@@ -18,7 +18,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GameScreen implements Screen {
-	private final int NUM_OF_BUCKETS = 4;
+	public final int NUM_OF_BUCKETS = 4;
 	
 	private BucketController bucketController;
 	

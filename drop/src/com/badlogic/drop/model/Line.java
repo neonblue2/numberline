@@ -64,7 +64,7 @@ public class Line {
 		return returnValue;
 	}
 	
-	public boolean isOnLine(Bucket bucket) {
+	public boolean isStuckOnLine(Bucket bucket) {
 		return bucketsOnLine.contains(bucket);
 	}
 }

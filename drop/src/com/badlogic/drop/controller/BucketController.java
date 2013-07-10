@@ -44,7 +44,7 @@ public class BucketController implements InputProcessor {
 	
 	private void moveCurrentBucket(final Vector3 touchPos) {
 		float xPos = getCurrentBucket().getPosX() + (touchPos.x - oldTouchPos.x);
-		if (line.isOnLine(getCurrentBucket())) {
+		if (line.isStuckOnLine(getCurrentBucket())) {
 			xPos = alterXPos(getCurrentBucket(), xPos);
     	} else {
     		getCurrentBucket().setPosY(getCurrentBucket().getPosY() + (touchPos.y - oldTouchPos.y));

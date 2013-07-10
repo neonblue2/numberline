@@ -37,7 +37,7 @@ public class GameScreen implements Screen {
 	    
 	    final Line line = bucketController.getLine();
 	    
-	    if (bucketController.hasGameEnded()) {
+	    if (bucketController.hasGameEnded() && line.x2 >= 0) {
 	    	line.x1 -= 10;
 	    	line.x2 -= 10;
 	    }
@@ -68,7 +68,7 @@ public class GameScreen implements Screen {
 	    	float textXPos = b.getPosX() + (b.getDimX() / 2);
     		final float textYPos = b.getPosY() + (b.getDimY() / 2);
     		// Alter the bucket and text x positions if the game has ended
-	    	if (bucketController.hasGameEnded()) {
+	    	if (bucketController.hasGameEnded() && line.x2 >= 0) {
 		    	b.setPosX(b.getPosX()-10);
 		    	textXPos -= 10;
 		    }

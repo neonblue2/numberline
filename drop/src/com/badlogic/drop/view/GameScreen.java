@@ -40,6 +40,11 @@ public class GameScreen implements Screen {
 	    if (bucketController.hasGameEnded() && line.x2 >= 0) {
 	    	line.x1 -= 10;
 	    	line.x2 -= 10;
+	    } else if (line.x2 <= 0) {
+	    	// Reset
+	    	dispose();
+	    	bucketController.getBuckets().clear();
+	    	show();
 	    }
 	    
 	    lineRenderer.setProjectionMatrix(camera.combined);

@@ -12,6 +12,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -62,6 +63,8 @@ public class GameScreen implements Screen {
 	    
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();
+	    batch.draw(new Texture(Gdx.files.internal("front.png")), line.x1, line.y-9, 86, 18);
+	    batch.draw(new Texture(Gdx.files.internal("back.png")), line.x2-86, line.y-9, 86, 18);
 	    for (final Bucket b : bucketController.getBuckets()) {
 	    	// Set the filter colour of the bucket
 	    	if (b.isInInvalidArea()) {
@@ -106,7 +109,7 @@ public class GameScreen implements Screen {
 	    final int x = (CAMERA_WIDTH / 2) - (CAMERA_HEIGHT / 2);
 	    final int y = 100;
 	    final int w = 72;
-	    final int h = 75;
+	    final int h = 18;
 	    
 	    for (int i = 0; i < NUM_OF_BUCKETS; i++) {
 	    	int x2 = x * (i + 1);

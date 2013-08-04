@@ -41,10 +41,10 @@ public class GameScreen implements Screen {
 	    
 	    final Line line = bucketController.getLine();
 	    
-	    if (bucketController.hasGameEnded() && line.x2 >= 0) {
+	    if (bucketController.hasGameEnded() && line.x2+86 >= 0) {
 	    	line.x1 -= 10;
 	    	line.x2 -= 10;
-	    } else if (line.x2 < 0) {
+	    } else if (line.x2+86 < 0) {
 	    	// Reset
 	    	dispose();
 	    	bucketController.getBuckets().clear();
@@ -67,8 +67,6 @@ public class GameScreen implements Screen {
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();
 	    batch.setColor(Color.WHITE);
-	    //batch.draw(new Texture(Gdx.files.internal("front.png")), line.x1, line.y-9, 86, 18);
-	    //batch.draw(new Texture(Gdx.files.internal("back.png")), line.x2-86, line.y-9, 86, 18);
 	    batch.draw(trainFront, line.x1-86, line.y-9, 86, 18);
 	    batch.draw(trainBack, line.x2, line.y-9, 86, 18);
 	    for (final Bucket b : bucketController.getBuckets()) {

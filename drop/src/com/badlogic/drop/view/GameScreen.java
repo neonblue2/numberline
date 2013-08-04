@@ -29,6 +29,9 @@ public class GameScreen implements Screen {
 	
 	private final BitmapFont valueText = new BitmapFont();
 	
+	private final Texture trainFront = new Texture(Gdx.files.internal("front.png"));
+	private final Texture trainBack = new Texture(Gdx.files.internal("back.png"));
+			
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
@@ -64,8 +67,10 @@ public class GameScreen implements Screen {
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();
 	    batch.setColor(Color.WHITE);
-	    batch.draw(new Texture(Gdx.files.internal("front.png")), line.x1, line.y-9, 86, 18);
-	    batch.draw(new Texture(Gdx.files.internal("back.png")), line.x2-86, line.y-9, 86, 18);
+	    //batch.draw(new Texture(Gdx.files.internal("front.png")), line.x1, line.y-9, 86, 18);
+	    //batch.draw(new Texture(Gdx.files.internal("back.png")), line.x2-86, line.y-9, 86, 18);
+	    batch.draw(trainFront, line.x1-86, line.y-9, 86, 18);
+	    batch.draw(trainBack, line.x2, line.y-9, 86, 18);
 	    for (final Bucket b : bucketController.getBuckets()) {
 	    	// Set the filter colour of the bucket to red if in an incorrect position
 	    	if (b.isInInvalidArea()) {

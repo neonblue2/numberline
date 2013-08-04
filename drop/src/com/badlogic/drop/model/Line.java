@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Line {
 	public final Color colour = new Color(1, 1, 1, 0);
-	public int x1 = 50;
-	public int x2 = 750;
+	public int x1 = 50+86;
+	public int x2 = 750-86;
 	public final int y = 50;
 	
 	private int numbucketsOnLine;

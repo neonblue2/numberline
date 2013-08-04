@@ -73,10 +73,10 @@ public class BucketController implements InputProcessor {
 	}
 	
 	private float alterXPos(final Bucket b, float xPos) {
-		if ((xPos + b.getDimX() / 2) < line.x1) {
-			xPos = line.x1 - b.getDimX() / 2;
-		} else if ((xPos + b.getDimX() / 2) > line.x2) {
-			xPos = line.x2 - b.getDimX() / 2;
+		if (xPos < line.x1) {
+			xPos = line.x1;
+		} else if ((xPos + b.getDimX()) > line.x2) {
+			xPos = line.x2 - b.getDimX();
 		}
 		return xPos;
 	}

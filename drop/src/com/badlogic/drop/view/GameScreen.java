@@ -51,7 +51,7 @@ public class GameScreen implements Screen {
 	    } else if (line.x2+86 < 0) {
 	    	// Reset
 	    	dispose();
-	    	if (currentLevel == levels.length-1) {
+	    	if (currentLevel < levels.length) {
 	    		bucketController.newLevelStarted();
 		    	line.reset();
 		    	currentLevel++;
@@ -120,9 +120,17 @@ public class GameScreen implements Screen {
 	    
 	    valueText.setColor(Color.RED);
 	    
-	    levels = new Level[5];
+	    levels = new Level[15];
+	    Type type = Type.WHOLE;
 	    for (int i = 0; i < levels.length; i++) {
-	    	levels[i] = new Level(i+1, Type.WHOLE, bucketController);
+	    	if (i < levels.length/3) {
+	    		type = Type.WHOLE;
+	    	} else if (i < 2 * levels.length/3) {
+	    		type = Type.DECIMAL;
+	    	} else if (i < levels.length) {
+	    		type = Type.FRACTION;
+	    	}
+	    	levels[i] = new Level(type, bucketController);
 	    }
 	    levels[0].start();
 	    currentLevel = 0;

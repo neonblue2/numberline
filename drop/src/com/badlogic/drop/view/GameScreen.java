@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
 	    	} else if (i < levels.length) {
 	    		type = Type.FRACTION;
 	    	}
-	    	levels[i] = new Level(type, bucketController);
+	    	levels[i] = new Level(i+1, type, bucketController);
 	    }
 	    levels[0].start();
 	    currentLevel = 0;

@@ -90,10 +90,14 @@ public class GameScreen implements Screen {
 	    	// Set the position of the text on the bucket
 	    	float textXPos = b.getPosX() + (b.getDimX() / 2);
     		final float textYPos = b.getPosY() + (b.getDimY() / 2);
-    		// Alter the bucket and text x positions if the game has ended
+    		// Alter the bucket and text x positions if the level has ended
 	    	if (bucketController.isLevelEnd() && line.x2 >= 0) {
-		    	b.setPosX(b.getPosX()-10);
-		    	textXPos -= 10;
+		    	if (b.getPosX() + b.getDimX() > line.x2) {
+		    		//b.setPosX(line.x2 - b.getDimX());
+		    		bucketController.moveBucketOnLine(b, line.x2 - b.getDimX());
+		    	}
+	    		//b.setPosX(b.getPosX()-10);
+		    	//textXPos -= 10;
 		    }
 	    	// Draw the bucket and its text
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());

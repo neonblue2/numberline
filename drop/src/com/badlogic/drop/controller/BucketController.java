@@ -40,7 +40,7 @@ public class BucketController implements InputProcessor {
 		Gdx.input.setInputProcessor(this);
 	}
 	
-	private void moveBucketOnLine(final Bucket b, float xPos) {
+	public void moveBucketOnLine(final Bucket b, float xPos) {
 		xPos = alterXPos(b, xPos);
     	b.setPosX(xPos);
 		handleCollisions(b);
@@ -95,7 +95,7 @@ public class BucketController implements InputProcessor {
 		final float bucketLeftEdge = bucket.getPosX();
 		final float bucketRightEdge = bucket.getPosX() + bucket.getDimX();
 		for (final Bucket b : buckets) {
-			if (!b.equals(getCurrentBucket()) && !b.equals(bucket) && isOnLine(bucket) && isOnLine(b)) {
+			if (!b.equals(bucket) && isOnLine(bucket) && isOnLine(b)) {
 				final float bLeftEdge = b.getPosX();
 				final float bRightEdge = b.getPosX() + b.getDimX();
 				if (bucketLeftEdge < bRightEdge && bucketRightEdge > bRightEdge) {

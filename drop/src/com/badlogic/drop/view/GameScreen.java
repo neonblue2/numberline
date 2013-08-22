@@ -133,7 +133,6 @@ public class GameScreen implements Screen {
 		for (int i = 0; i < bucketController.getBuckets().size(); i++) {
 			bucketController.getBuckets().get(i).disposeTexture();
 		}
-	    //batch.dispose();
 	}
 
 	@Override

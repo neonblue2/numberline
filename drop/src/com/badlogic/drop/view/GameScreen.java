@@ -84,6 +84,8 @@ public class GameScreen implements Screen {
 	    	// Set the filter colour of the bucket to red if in an incorrect position
 	    	if (b.isInInvalidArea()) {
 	    		batch.setColor(Color.RED);
+	    	} else {
+	    		batch.setColor(Color.WHITE);
 	    	}
 	    	// Set the position of the text on the bucket
 	    	float textXPos = b.getPosX() + (b.getDimX() / 2);

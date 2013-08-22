@@ -25,16 +25,11 @@ public class Level {
 	    
 	    for (int i = 0; i < GameScreen.NUM_OF_BUCKETS; i++) {
 	    	int x2 = x * (i + 1);
-	    	// TEST CODE
-	    	//final Type[] valueTypes = {Type.WHOLE, Type.DECIMAL, Type.FRACTION};
-	    	//final int typeIndex = new Random().nextInt(3);
-	    	//final Type valueType = valueTypes[typeIndex];
 	    	final int numerator = new Random().nextInt(10);
 	    	int denominator = 1;
 	    	if (LEVEL_TYPE != Type.WHOLE) {
 	    		denominator = new Random().nextInt(49) + 1;
 	    	}
-	    	// TODO: REMOVE TEST CODE
 	    	Bucket bucket = new Bucket(new Value(LEVEL_TYPE, numerator, denominator), x2, y, w, h);
 	    	BUCKETCONTROLLER.getBuckets().add(bucket);
 	    }

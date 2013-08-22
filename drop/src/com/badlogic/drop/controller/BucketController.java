@@ -14,8 +14,6 @@ public class BucketController implements InputProcessor {
 	public static final int UNTOUCHED_BUCKET_ADDRESS = -1;
 	private final float[] INVALID_OLD_TOUCH_POS = {-1, -1, -1};
 	
-	private GameScreen gameScreen;
-	
 	private OrthographicCamera camera;
 	
 	private ArrayList<Bucket> buckets;
@@ -25,10 +23,9 @@ public class BucketController implements InputProcessor {
 	
 	private Vector3 oldTouchPos;
 	
-	private boolean gameOver;
+	private boolean levelOver;
 	
-	public BucketController(GameScreen gameScreen, OrthographicCamera camera) {
-		this.gameScreen = gameScreen;
+	public BucketController(OrthographicCamera camera) {
 		this.camera = camera;
 		
 		buckets = new ArrayList<Bucket>();
@@ -38,7 +35,7 @@ public class BucketController implements InputProcessor {
 		
 		oldTouchPos = new Vector3(INVALID_OLD_TOUCH_POS);
 		
-		gameOver = false;
+		levelOver = false;
 		
 		Gdx.input.setInputProcessor(this);
 	}
@@ -60,8 +57,8 @@ public class BucketController implements InputProcessor {
     			getCurrentBucket().setPosY(line.y - getCurrentBucket().getDimY() / 2);
     			if (!line.addBucket(getCurrentBucket())) {
     				getCurrentBucket().setInvalidArea(true);
-    			} else if (line.getNumBucketsOnLine() == gameScreen.NUM_OF_BUCKETS) {
-    				endGame();
+    			} else if (line.getNumBucketsOnLine() == GameScreen.NUM_OF_BUCKETS) {
+    				endLevel();
     			}
     		} else {
     			getCurrentBucket().setInvalidArea(false);
@@ -112,13 +109,13 @@ public class BucketController implements InputProcessor {
 		}
 	}
 	
-	private void endGame() {
-		gameOver = true;
+	private void endLevel() {
+		levelOver = true;
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (!gameOver) {
+		if (!levelOver) {
 			Vector3 touchPos = new Vector3(screenX, screenY, 0);
 			camera.unproject(touchPos);
 			for (int i = buckets.size() - 1; i >= 0; i--) {
@@ -169,8 +166,12 @@ public class BucketController implements InputProcessor {
 		return line;
 	}
 	
-	public boolean hasGameEnded() {
-		return gameOver;
+	public boolean isLevelEnd() {
+		return levelOver;
+	}
+	
+	public void newLevelStarted() {
+		levelOver = false;
 	}
 
 	@Override

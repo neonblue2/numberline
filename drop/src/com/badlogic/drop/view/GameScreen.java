@@ -1,11 +1,9 @@
 package com.badlogic.drop.view;
 
-import java.util.Random;
-
 import com.badlogic.drop.controller.BucketController;
 import com.badlogic.drop.model.Bucket;
+import com.badlogic.drop.model.Level;
 import com.badlogic.drop.model.Line;
-import com.badlogic.drop.model.Value;
 import com.badlogic.drop.model.Value.Type;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,13 +17,19 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class GameScreen implements Screen {
-	public final int NUM_OF_BUCKETS = 4;
+	public static final int NUM_OF_BUCKETS = 4;
+	
+	public static final int CAMERA_WIDTH = 800;
+	public static final int CAMERA_HEIGHT = 480;
 	
 	private BucketController bucketController;
 	
 	private OrthographicCamera camera;
 	private ShapeRenderer lineRenderer;
 	private SpriteBatch batch;
+	
+	private Level[] levels;
+	private int currentLevel;
 	
 	private final BitmapFont valueText = new BitmapFont();
 	
@@ -41,14 +45,21 @@ public class GameScreen implements Screen {
 	    
 	    final Line line = bucketController.getLine();
 	    
-	    if (bucketController.hasGameEnded() && line.x2+86 >= 0) {
+	    if (bucketController.isLevelEnd() && line.x2+86 >= 0) {
 	    	line.x1 -= 10;
 	    	line.x2 -= 10;
 	    } else if (line.x2+86 < 0) {
 	    	// Reset
 	    	dispose();
-	    	bucketController.getBuckets().clear();
-	    	show();
+	    	if (currentLevel == levels.length-1) {
+	    		bucketController.newLevelStarted();
+		    	line.reset();
+		    	currentLevel++;
+		    	levels[currentLevel].start();
+	    	} else {
+	    		// Game over
+	    		// Show end screen
+	    	}
 	    }
 	    
 	    lineRenderer.setProjectionMatrix(camera.combined);
@@ -78,7 +89,7 @@ public class GameScreen implements Screen {
 	    	float textXPos = b.getPosX() + (b.getDimX() / 2);
     		final float textYPos = b.getPosY() + (b.getDimY() / 2);
     		// Alter the bucket and text x positions if the game has ended
-	    	if (bucketController.hasGameEnded() && line.x2 >= 0) {
+	    	if (bucketController.isLevelEnd() && line.x2 >= 0) {
 		    	b.setPosX(b.getPosX()-10);
 		    	textXPos -= 10;
 		    }
@@ -98,40 +109,23 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		final int CAMERA_WIDTH = 800;
-		final int CAMERA_HEIGHT = 480;
-		
 		camera = new OrthographicCamera();
 	    camera.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
 	    
 	    batch = new SpriteBatch();
 	    
-	    bucketController = new BucketController(this, camera);
-	    
-	    final int x = (CAMERA_WIDTH / 2) - (CAMERA_HEIGHT / 2);
-	    final int y = 100;
-	    final int w = 72;
-	    final int h = 18;
-	    
-	    for (int i = 0; i < NUM_OF_BUCKETS; i++) {
-	    	int x2 = x * (i + 1);
-	    	// TEST CODE
-	    	final Type[] valueTypes = {Type.WHOLE, Type.DECIMAL, Type.FRACTION};
-	    	final int typeIndex = new Random().nextInt(3);
-	    	final Type valueType = valueTypes[typeIndex];
-	    	final int numerator = new Random().nextInt(10);
-	    	int denominator = 1;
-	    	if (valueType != Type.WHOLE) {
-	    		denominator = new Random().nextInt(49) + 1;
-	    	}
-	    	// TODO: REMOVE TEST CODE
-	    	Bucket bucket = new Bucket(new Value(valueType, numerator, denominator), x2, y, w, h);
-	    	bucketController.getBuckets().add(bucket);
-	    }
+	    bucketController = new BucketController(camera);
 	    
 	    lineRenderer = new ShapeRenderer();
 	    
 	    valueText.setColor(Color.RED);
+	    
+	    levels = new Level[5];
+	    for (int i = 0; i < levels.length; i++) {
+	    	levels[i] = new Level(i+1, Type.WHOLE, bucketController);
+	    }
+	    levels[0].start();
+	    currentLevel = 0;
 	}
 	
 	@Override
@@ -139,7 +133,7 @@ public class GameScreen implements Screen {
 		for (int i = 0; i < bucketController.getBuckets().size(); i++) {
 			bucketController.getBuckets().get(i).disposeTexture();
 		}
-	    batch.dispose();
+	    //batch.dispose();
 	}
 
 	@Override

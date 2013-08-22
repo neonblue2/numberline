@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Line {
 	public final Color colour = new Color(1, 1, 1, 0);
-	public int x1 = 50+86;
-	public int x2 = 750-86;
+	private int default_x1 = 50+86;
+	private int default_x2 = 750-86;
+	public int x1 = default_x1;
+	public int x2 = default_x2;
 	public final int y = 50;
 	
 	private int numbucketsOnLine;
@@ -66,5 +68,12 @@ public class Line {
 	
 	public boolean isStuckOnLine(Bucket bucket) {
 		return bucketsOnLine.contains(bucket);
+	}
+	
+	public void reset() {
+		x1 = default_x1;
+		x2 = default_x2;
+		bucketsOnLine.clear();
+		numbucketsOnLine = 0;
 	}
 }

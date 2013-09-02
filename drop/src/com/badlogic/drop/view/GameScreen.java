@@ -19,8 +19,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 public class GameScreen implements Screen {
 	public static final int NUM_OF_BUCKETS = 4;
 	
-	public static final int CAMERA_WIDTH = 800;
-	public static final int CAMERA_HEIGHT = 480;
+	public static final int CAMERA_WIDTH = 1280;
+	public static final int CAMERA_HEIGHT = 703;
+	
+	public static final float START_END_CAR_WIDTH = 211.5f;
 	
 	private BucketController bucketController;
 	
@@ -47,17 +49,17 @@ public class GameScreen implements Screen {
 	    
 	    final Line line = bucketController.getLine();
 	    
-	    if (bucketController.isLevelEnd() && line.x2+86 >= 0) {
+	    if (bucketController.isLevelEnd() && line.x2+START_END_CAR_WIDTH >= 0) {
 	    	if (lineX1CanMove) {
 	    		line.x1 -= 10;
 	    	}
-	    	if (line.x2 - 10 < line.x1 + 72 * 4) {
-    			line.x2 = line.x1 + 72 * 4;
+	    	if (line.x2 - 10 < line.x1 + Bucket.width * 4) {
+    			line.x2 = line.x1 + Bucket.width * 4;
     			lineX1CanMove = true;
     		} else {
     			line.x2 -= 10;
     		}
-	    } else if (line.x2+86 < 0) {
+	    } else if (line.x2+START_END_CAR_WIDTH < 0) {
 	    	// Reset
 	    	dispose();
 	    	if (currentLevel < levels.length) {
@@ -88,8 +90,8 @@ public class GameScreen implements Screen {
 	    batch.setProjectionMatrix(camera.combined);		// Use the coordinate system specified by the camera
 	    batch.begin();
 	    batch.setColor(Color.WHITE);
-	    batch.draw(trainFront, line.x1-86, line.y-9, 86, 18);
-	    batch.draw(trainBack, line.x2, line.y-9, 86, 18);
+	    batch.draw(trainFront, line.x1-START_END_CAR_WIDTH, line.y-Bucket.height/2, START_END_CAR_WIDTH, Bucket.height);
+	    batch.draw(trainBack, line.x2, line.y-Bucket.height/2, START_END_CAR_WIDTH, Bucket.height);
 	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
 	    	final Bucket b = bucketController.getBuckets().get(i);
 	    	// Set the filter colour of the bucket to red if in an incorrect position

@@ -3,15 +3,16 @@ package com.badlogic.drop.model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.badlogic.drop.view.GameScreen;
 import com.badlogic.gdx.graphics.Color;
 
 public class Line {
 	public final Color colour = new Color(1, 1, 1, 0);
-	private int default_x1 = 50+86;
-	private int default_x2 = 750-86;
-	public int x1 = default_x1;
-	public int x2 = default_x2;
-	public final int y = 50;
+	private float default_x1 = 50+GameScreen.START_END_CAR_WIDTH;
+	private float default_x2 = 1230-GameScreen.START_END_CAR_WIDTH;
+	public float x1 = default_x1;
+	public float x2 = default_x2;
+	public final int y = 75;
 	
 	private int numbucketsOnLine;
 	
@@ -79,17 +80,17 @@ public class Line {
 		numbucketsOnLine = 0;
 	}
 	
-	public int getFinalPos(final Bucket b) {
-		final int car1 = x1;
+	public float getFinalPos(final Bucket b) {
+		final float car1 = x1;
 		switch (bucketsOnLine.indexOf(b)) {
 		case 0:
 			return car1;
 		case 1:
-			return car1 + 72;
+			return car1 + Bucket.width;
 		case 2:
-			return car1 + 72 * 2;
+			return car1 + Bucket.width * 2;
 		case 3:
-			return car1 + 72 * 3;
+			return car1 + Bucket.width * 3;
 		default:
 			return car1;
 		}

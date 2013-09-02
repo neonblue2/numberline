@@ -20,10 +20,9 @@ public class Level {
 	public void start() {
 		BUCKETCONTROLLER.getBuckets().clear();
 		
-		final int x = (GameScreen.CAMERA_WIDTH / 2) - (GameScreen.CAMERA_HEIGHT / 2);
-	    final int y = 100;
-	    final int w = 72;
-	    final int h = 18;
+		//final int x = (GameScreen.CAMERA_WIDTH / 2) - (GameScreen.CAMERA_HEIGHT / 2);
+		int x = (int) Bucket.width;
+	    final int y = 125;
 	    
 	    int numMod = 0;
 	    int denMod = 0;
@@ -62,14 +61,14 @@ public class Level {
 		}
 	    
 	    for (int i = 0; i < GameScreen.NUM_OF_BUCKETS; i++) {
-	    	int x2 = x * (i + 1);
 	    	final int numerator = new Random().nextInt(numMod);
 	    	int denominator = 1;
 	    	if (LEVEL_TYPE != Type.WHOLE) {
 	    		denominator = new Random().nextInt(denMod) + 1;
 	    	}
-	    	Bucket bucket = new Bucket(new Value(LEVEL_TYPE, numerator, denominator), x2, y, w, h);
+	    	Bucket bucket = new Bucket(new Value(LEVEL_TYPE, numerator, denominator), x, y);
 	    	BUCKETCONTROLLER.getBuckets().add(bucket);
+	    	x += Bucket.width + 75;
 	    }
 	}
 }

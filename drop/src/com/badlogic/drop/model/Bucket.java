@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public class Bucket implements Comparable<Bucket> {
+	public static final float width = 175;
+	public static final float height = 34.8f;
+	
 	private Texture image;
 	private final Vector2 pos;
 	private final Vector2 dim;
@@ -16,11 +19,11 @@ public class Bucket implements Comparable<Bucket> {
 	
 	private boolean inPosition;
 	
-	public Bucket(Value value, int x, int y, int w, int h) {
+	public Bucket(Value value, int x, int y) {
 		image = new Texture(Gdx.files.internal("bucket.png"));
 		this.value = value;
 		pos = new Vector2(x, y);
-		dim = new Vector2(w, h);
+		dim = new Vector2(width, height);
 		inInvalidArea = false;
 		inPosition = false;
 	}

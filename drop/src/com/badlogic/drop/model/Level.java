@@ -20,7 +20,6 @@ public class Level {
 	public void start() {
 		BUCKETCONTROLLER.getBuckets().clear();
 		
-		//final int x = (GameScreen.CAMERA_WIDTH / 2) - (GameScreen.CAMERA_HEIGHT / 2);
 		int x = (int) Bucket.width;
 	    final int y = 125;
 	    

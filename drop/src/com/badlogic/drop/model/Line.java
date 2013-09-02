@@ -1,6 +1,7 @@
 package com.badlogic.drop.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.badlogic.gdx.graphics.Color;
 
@@ -60,6 +61,7 @@ public class Line {
 		if (returnValue || numbucketsOnLine == 0) {
 			numbucketsOnLine++;
 			bucketsOnLine.add(bucket);
+			Collections.sort(bucketsOnLine);
 			returnValue = true;
 		}
 		
@@ -75,5 +77,21 @@ public class Line {
 		x2 = default_x2;
 		bucketsOnLine.clear();
 		numbucketsOnLine = 0;
+	}
+	
+	public int getFinalPos(final Bucket b) {
+		final int car1 = x1;
+		switch (bucketsOnLine.indexOf(b)) {
+		case 0:
+			return car1;
+		case 1:
+			return car1 + 72;
+		case 2:
+			return car1 + 72 * 2;
+		case 3:
+			return car1 + 72 * 3;
+		default:
+			return car1;
+		}
 	}
 }

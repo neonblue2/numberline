@@ -43,7 +43,9 @@ public class BucketController implements InputProcessor {
 	public void moveBucketOnLine(final Bucket b, float xPos) {
 		xPos = alterXPos(b, xPos);
     	b.setPosX(xPos);
-		handleCollisions(b);
+    	if (!levelOver) {
+    		handleCollisions(b);
+    	}
 	}
 	
 	private void moveCurrentBucket(final Vector3 touchPos) {

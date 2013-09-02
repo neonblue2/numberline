@@ -1,10 +1,11 @@
 package com.badlogic.drop.model;
 
+import com.badlogic.drop.model.Value.Equality;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
-public class Bucket {
+public class Bucket implements Comparable<Bucket> {
 	private Texture image;
 	private final Vector2 pos;
 	private final Vector2 dim;
@@ -13,12 +14,15 @@ public class Bucket {
 	
 	public final Value value;
 	
+	private boolean inPosition;
+	
 	public Bucket(Value value, int x, int y, int w, int h) {
 		image = new Texture(Gdx.files.internal("bucket.png"));
 		this.value = value;
 		pos = new Vector2(x, y);
 		dim = new Vector2(w, h);
 		inInvalidArea = false;
+		inPosition = false;
 	}
 	
 	public void disposeTexture() {
@@ -72,5 +76,24 @@ public class Bucket {
 	
 	public void setInvalidArea(boolean b) {
 		inInvalidArea = b;
+	}
+	
+	public void setIsInPosition() {
+		inPosition = true;
+	}
+	
+	public boolean isInPosition() {
+		return inPosition;
+	}
+
+	@Override
+	public int compareTo(Bucket b) {
+		int returnValue = 0;
+		if (value.compare(b.value) == Equality.LESS) {
+			returnValue = -1;
+		} else if (value.compare(b.value) == Equality.GREATER) {
+			returnValue = 1;
+		}
+		return returnValue;
 	}
 }

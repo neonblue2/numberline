@@ -31,6 +31,8 @@ public class GameScreen implements Screen {
 	private Level[] levels;
 	private int currentLevel;
 	
+	private boolean lineX1CanMove;
+	
 	private final BitmapFont valueText = new BitmapFont();
 	
 	private final Texture trainFront = new Texture(Gdx.files.internal("front.png"));
@@ -46,14 +48,22 @@ public class GameScreen implements Screen {
 	    final Line line = bucketController.getLine();
 	    
 	    if (bucketController.isLevelEnd() && line.x2+86 >= 0) {
-	    	line.x1 -= 10;
-	    	line.x2 -= 10;
+	    	if (lineX1CanMove) {
+	    		line.x1 -= 10;
+	    	}
+	    	if (line.x2 - 10 < line.x1 + 72 * 4) {
+    			line.x2 = line.x1 + 72 * 4;
+    			lineX1CanMove = true;
+    		} else {
+    			line.x2 -= 10;
+    		}
 	    } else if (line.x2+86 < 0) {
 	    	// Reset
 	    	dispose();
 	    	if (currentLevel < levels.length) {
 	    		bucketController.newLevelStarted();
 		    	line.reset();
+		    	lineX1CanMove = false;
 		    	currentLevel++;
 		    	levels[currentLevel].start();
 	    	} else {
@@ -80,7 +90,8 @@ public class GameScreen implements Screen {
 	    batch.setColor(Color.WHITE);
 	    batch.draw(trainFront, line.x1-86, line.y-9, 86, 18);
 	    batch.draw(trainBack, line.x2, line.y-9, 86, 18);
-	    for (final Bucket b : bucketController.getBuckets()) {
+	    for (int i = 0; i < bucketController.getBuckets().size(); i++) {
+	    	final Bucket b = bucketController.getBuckets().get(i);
 	    	// Set the filter colour of the bucket to red if in an incorrect position
 	    	if (b.isInInvalidArea()) {
 	    		batch.setColor(Color.RED);
@@ -92,12 +103,11 @@ public class GameScreen implements Screen {
     		final float textYPos = b.getPosY() + (b.getDimY() / 2);
     		// Alter the bucket and text x positions if the level has ended
 	    	if (bucketController.isLevelEnd() && line.x2 >= 0) {
-		    	if (b.getPosX() + b.getDimX() > line.x2) {
-		    		//b.setPosX(line.x2 - b.getDimX());
-		    		bucketController.moveBucketOnLine(b, line.x2 - b.getDimX());
-		    	}
-	    		//b.setPosX(b.getPosX()-10);
-		    	//textXPos -= 10;
+	    		if (b.getPosX() - 10 < line.getFinalPos(b)) {
+		    		bucketController.moveBucketOnLine(b, line.getFinalPos(b));
+		    	} else {
+		    		bucketController.moveBucketOnLine(b, b.getPosX() - 10);
+		   		}
 		    }
 	    	// Draw the bucket and its text
 	    	batch.draw(b.getImage(), b.getPosX(), b.getPosY(), b.getDimX(), b.getDimY());
@@ -123,6 +133,8 @@ public class GameScreen implements Screen {
 	    bucketController = new BucketController(camera);
 	    
 	    lineRenderer = new ShapeRenderer();
+	    
+	    lineX1CanMove = false;
 	    
 	    valueText.setColor(Color.RED);
 	    

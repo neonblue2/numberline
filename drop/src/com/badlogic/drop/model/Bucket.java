@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Bucket implements Comparable<Bucket> {
 	public static final float width = 175;
-	public static final float height = 34.8f;
+	public static final float height = 65;
 	
 	private Texture image;
 	private final Vector2 pos;
